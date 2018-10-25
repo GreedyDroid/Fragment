@@ -1,5 +1,6 @@
 package com.example.nurud.fragment;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,36 +14,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        FragmentOne  fragmentOne = new FragmentOne();
+        ft.add(R.id.fragmentContainer, fragmentOne);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
 
     public void ChangeFragment(View view) {
+
+        Fragment fragment = null;
         switch (view.getId()){
             case R.id.f1:
+                fragment = new FragmentOne();
 
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-
-                FragmentOne fragmentOne = new FragmentOne();
-                ft.add(R.id.fragmentContainer,fragmentOne);
-                ft.commit();
                 break;
 
             case R.id.f2:
-                FragmentManager fm2 = getSupportFragmentManager();
-                FragmentTransaction ft2 = fm2.beginTransaction();
-
-                FragmentTwo fragmentTwo = new FragmentTwo();
-                ft2.replace(R.id.fragmentContainer,fragmentTwo);
-                ft2.commit();
+                fragment = new FragmentTwo();
                 break;
             case R.id.f3:
-                FragmentManager fm3 = getSupportFragmentManager();
-                FragmentTransaction ft3 = fm3.beginTransaction();
-
-                FragmentThree fragmentThree = new FragmentThree();
-                ft3.replace(R.id.fragmentContainer,fragmentThree);
-                ft3.commit();
+                fragment = new FragmentThree();
                 break;
         }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragmentContainer, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
